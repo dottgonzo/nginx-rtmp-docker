@@ -8,3 +8,6 @@ services:
       - RTMP_PASS=rtmptest
     volumes:
       - /tmp/ee:/data
+    ports:
+      - 4545:1935
+      - 3880:80
