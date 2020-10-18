@@ -1,5 +1,10 @@
 #! /bin/bash
 
+if [[ -z $WITHREC ]]; then
+mv /nginxworec.conf /usr/local/nginx/conf/nginx.conf
+else
+mv /nginxwrec.conf /usr/local/nginx/conf/nginx.conf
+fi
 
 currentpass=$(cat /usr/local/nginx/conf/default | grep 'arg_psk' | sed "s/if (\$arg_psk = '//g" | sed "s/') {//g")
 
