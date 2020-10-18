@@ -77,6 +77,18 @@ location /hls {
             add_header Access-Control-Allow-Origin *;
 
 }
+location /hlsrec {
+  types {
+                application/vnd.apple.mpegurl m3u8;
+            }
+    alias /tmp/hlsrec;
+
+            add_header Cache-Control no-cache;
+
+            # To avoid issues with cross-domain HTTP requests (e.g. during development)
+            add_header Access-Control-Allow-Origin *;
+
+}
 	# Only for nginx-naxsi used with nginx-naxsi-ui : process denied requests
 	#location /RequestDenied {
 	#	proxy_pass http://127.0.0.1:8080;    
