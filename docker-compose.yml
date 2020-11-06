@@ -1,13 +1,25 @@
 version: '3.3'
 
-services:
+networks:
+  outside:
+    external:
+      name: "${PROXY_NETWORK_NAME:-nginx-proxy}"
 
+
+services:
   streamer:
-    image: dottgonzo/nginx-rtmp-docker
-    environment:
-      - RTMP_PASS=rtmptest
-    volumes:
-      - /tmp/ee:/data
+    image: dottgonzo/nginx-rtmp-docker:latest
+    restart: always
     ports:
-      - 4545:1935
-      - 3880:80
+      - ${STREAMER_PORT:-1935}:1935
+    networks:
+      - outside
+    environment:
+      - VIRTUAL_HOST=${STREAMER_HOST:-demostreamer45.livemachine.io}
+      - VIRTUAL_PORT=80
+      - VIRTUAL_NETWORK=nginx-proxy
+      - LETSENCRYPT_HOST=${STREAMHOST:-demostreamer45.livemachine.io}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPTEMAIL:-aaa@ssss.com}
+      - RTMP_PASS=${STREAMER_PASSWD:-demo452020}
+    volumes:
+      - ${STREAMER_RECORD_VOLUME:-/cloud/volumes/streamer/data}:/data
